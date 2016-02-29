@@ -142,6 +142,8 @@ def get_elb_info(connection,elb):
         'security_groups': elb.security_groups,
         'health_check': get_health_check(elb.health_check),
         'subnets': elb.subnets,
+        'canonical_hosted_zone_name': elb.canonical_hosted_zone_name,
+        'canonical_hosted_zone_name_id': elb.canonical_hosted_zone_name_id,
         'instances_inservice': [],
         'instances_inservice_count': 0,
         'instances_outofservice': [],
@@ -157,7 +159,7 @@ def get_elb_info(connection,elb):
         elb_info['instances_outofservice'] = [inst.instance_id for inst in instance_health if inst.state == 'OutOfService']
         elb_info['instances_outofservice_count'] = len(elb_info['instances_outofservice'])
         elb_info['instances_inservice_percent'] = float(elb_info['instances_inservice_count'])/(
-                    float(elb_info['instances_inservice_count']) + 
+                    float(elb_info['instances_inservice_count']) +
                     float(elb_info['instances_outofservice_count']))*100
 
     return elb_info
